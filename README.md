@@ -75,7 +75,7 @@ The generated table also feeds the **Pace Band** tab (planned columns only — a
 
 **Charts** — two charts sit below the split table and update live as you generate splits or type in actual paces:
 - **Pace Chart (Planned vs Actual)** — a line chart comparing planned pace (amber) against your logged actual pace (mint) at each marker. Gaps in the actual line mean no pace was entered for that split.
-- **Ahead / Behind Plan** — a bar chart of the cumulative time diff at each marker, in minutes. Bars above zero (red) mean you were behind schedule at that point; below zero (mint) means ahead; gray bars mean no actual data yet.
+- **Ahead / Behind Plan** — a bar chart of the cumulative time diff at each marker, in seconds. Bars above zero (red) mean you were behind schedule at that point; below zero (mint) means ahead; gray bars mean no actual data yet.
 
 Charts are rendered with [Chart.js](https://www.chartjs.org/) (loaded from CDN, alongside jQuery).
 

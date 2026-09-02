@@ -163,8 +163,14 @@ $(function(){
     const plannedPaceData = actuals.rows.map(r=>r.plannedPaceDisplaySec);
     const actualPaceData = actuals.rows.map(r=>r.entered ? r.actualPaceDisplaySec : null);
 
-    const cumDiffData = actuals.rows.map(r=>r.entered ? r.cumulativeDiffSec/60 : null); // minutes; + = behind, - = ahead
-    const diffColors = cumDiffData.map(v => v==null ? 'rgba(154,166,192,0.35)' : (v > 0.008 ? CHART_COLORS.flag : (v < -0.008 ? CHART_COLORS.mint : CHART_COLORS.muted)));
+    const cumDiffSecData = actuals.rows.map(r=>r.entered ? r.cumulativeDiffSec : null); // seconds; + = behind, - = ahead
+    const diffColors = cumDiffSecData.map(v => v==null ? 'rgba(154,166,192,0.35)' : (v > 0.5 ? CHART_COLORS.flag : (v < -0.5 ? CHART_COLORS.mint : CHART_COLORS.muted)));
+
+    function fmtSignedHMS(sec){
+      if(sec == null || isNaN(sec)) return '—';
+      const sign = sec > 0 ? '+' : (sec < 0 ? '-' : '');
+      return `${sign}${fmtHMS(Math.abs(sec))}`;
+    }
 
     const paceCfg = {
       type: 'line',
@@ -174,7 +180,10 @@ $(function(){
       ]},
       options: {
         responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { labels: { color: CHART_COLORS.paper } } },
+        plugins: {
+          legend: { labels: { color: CHART_COLORS.paper } },
+          tooltip: { callbacks: { label: ctx => `${ctx.dataset.label}: ${fmtPace(ctx.parsed.y)}${unitSuffix}` } }
+        },
         scales: {
           x: { ticks: { color: CHART_COLORS.muted }, grid: { color: CHART_COLORS.gridline } },
           y: { ticks: { color: CHART_COLORS.muted, callback: v => fmtPace(v) }, grid: { color: CHART_COLORS.gridline },
@@ -184,14 +193,17 @@ $(function(){
     };
     const diffCfg = {
       type: 'bar',
-      data: { labels, datasets: [{ label: 'Ahead/behind (min)', data: cumDiffData, backgroundColor: diffColors }] },
+      data: { labels, datasets: [{ label: 'Ahead/behind', data: cumDiffSecData, backgroundColor: diffColors }] },
       options: {
         responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { display: false } },
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: ctx => fmtSignedHMS(ctx.parsed.y) } }
+        },
         scales: {
           x: { ticks: { color: CHART_COLORS.muted }, grid: { display: false } },
-          y: { ticks: { color: CHART_COLORS.muted }, grid: { color: CHART_COLORS.gridline },
-               title: { display: true, text: 'Minutes behind (+) / ahead (-)', color: CHART_COLORS.muted } }
+          y: { ticks: { color: CHART_COLORS.muted, callback: v => fmtSignedHMS(v) }, grid: { color: CHART_COLORS.gridline },
+               title: { display: true, text: 'Seconds behind (+) / ahead (-)', color: CHART_COLORS.muted } }
         }
       }
     };
