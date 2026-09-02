@@ -165,13 +165,13 @@
 
     <div class="card">
       <div class="card-title">Pace Chart — Planned vs Actual</div>
-      <canvas id="paceChart" height="220"></canvas>
+      <div class="chart-wrap"><canvas id="paceChart"></canvas></div>
       <div class="note">Amber is your planned pace per split; mint is what you actually ran (gaps mean no pace was logged for that split).</div>
     </div>
 
     <div class="card">
       <div class="card-title">Ahead / Behind Plan</div>
-      <canvas id="diffChart" height="180"></canvas>
+      <div class="chart-wrap chart-wrap-short"><canvas id="diffChart"></canvas></div>
       <div class="note">Bars above zero mean you were behind schedule at that marker; below zero means ahead. Gray bars mean no actual pace was logged up to that point.</div>
     </div>
   </div>
