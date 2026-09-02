@@ -25,10 +25,9 @@ Keep all three files in the same folder. `index.html` loads the other two by rel
 
 ## How to run
 
-No installation needed. Double-click `index.html` (or open it in any browser) — it works entirely offline except for three CDN calls:
+No installation needed. Double-click `index.html` (or open it in any browser) — it works entirely offline except for two CDN calls:
 
 - **jQuery 3.7.1** from `cdnjs.cloudflare.com`
-- **Chart.js 4.4.4** from `cdnjs.cloudflare.com` (powers the Splits & Strategy charts)
 - **Google Fonts** (Oswald, Roboto Mono) from `fonts.googleapis.com`
 
 If you need it fully offline, download those resources locally and update the `<link>`/`<script>` tags in `index.html` to point at local copies.
@@ -72,12 +71,6 @@ All splits are rescaled at the end so the cumulative time lands exactly on your 
 - **Clear Actuals** wipes all entered paces and resets the table to plan-only, without regenerating the planned splits.
 
 The generated table also feeds the **Pace Band** tab (planned columns only — actuals aren't included on the printable band).
-
-**Charts** — two charts sit below the split table and update live as you generate splits or type in actual paces:
-- **Pace Chart (Planned vs Actual)** — a line chart comparing planned pace (amber) against your logged actual pace (mint) at each marker. Gaps in the actual line mean no pace was entered for that split.
-- **Ahead / Behind Plan** — a bar chart of the cumulative time diff at each marker, in seconds. Bars above zero (red) mean you were behind schedule at that point; below zero (mint) means ahead; gray bars mean no actual data yet.
-
-Charts are rendered with [Chart.js](https://www.chartjs.org/) (loaded from CDN, alongside jQuery).
 
 ### 3. Race Predictor tab
 Enter one known result (distance + finish time) and get predicted times for 5K, 10K, Half Marathon, and Marathon, using the **Riegel formula**:
