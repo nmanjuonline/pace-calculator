@@ -184,6 +184,16 @@
                             <td colspan="6" style="color:var(--muted)">Generate splits to see the table.</td>
                         </tr>
                     </tbody>
+                    <tfoot>
+                        <tr class="marker total-row" id="splitsTotalRow" style="display:none;">
+                            <td>Total</td>
+                            <td id="totalPlannedPace">—</td>
+                            <td id="totalPlannedCum">—</td>
+                            <td id="totalActualPace">—</td>
+                            <td id="totalActualCum">—</td>
+                            <td id="totalDiff">—</td>
+                        </tr>
+                    </tfoot>
                 </table>
                 <div class="row" style="margin-top:12px;">
                     <button class="btn secondary" id="clearActuals">Clear Actuals</button>

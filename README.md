@@ -8,9 +8,9 @@ A single-page, client-side pace calculator for runners and race organizers. Solv
 
 ```
 .
-├── index.html       # Markup — all four tool panels, no logic or styling inline
-├── styles.css       # All visual styling (theme, layout, tables, print rules)
-├── script.js        # All calculation logic and DOM interactivity (jQuery)
+├── index.html      # Markup — all four tool panels, no logic or styling inline
+├── styles.css      # All visual styling (theme, layout, tables, print rules)
+├── script.js       # All calculation logic and DOM interactivity (jQuery)
 └── README.md        # This file
 ```
 
@@ -23,7 +23,7 @@ Keep all three files in the same folder. `index.html` loads the other two by rel
 <script src="script.js"></script>
 ```
 
-## How to Run
+## How to run
 
 No installation needed. Double-click `index.html` (or open it in any browser) — it works entirely offline except for two CDN calls:
 
@@ -45,8 +45,8 @@ Solves for **pace**, **finish time**, or **distance** — pick which one you wan
 | Input | Notes |
 |---|---|
 | Distance | Presets: 5K, 10K, Half Marathon, Marathon, or Custom (any value) |
-| Distance unit | km or mi |
-| Finish time | `hh:mm:ss` or `mm:ss` |
+| Distance Unit | km or mi |
+| Finish Time | `hh:mm:ss` or `mm:ss` |
 | Pace | `mm:ss`, tagged as `/km` or `/mi` |
 
 The result panel always shows all four derived values together: pace, finish time, distance, and speed (in both km/h and mph), so you can cross-check the numbers regardless of which one you solved for.
@@ -55,28 +55,30 @@ The result panel always shows all four derived values together: pace, finish tim
 
 Generates a full split table for a given distance and target finish time.
 
-- **Split interval** — every 1 km, every 5 km, or every 1 mile.
+- **Split Interval** — every 1 km, every 5 km, or every 1 mile.
 - **Strategy** — controls how pace is distributed across the race:
   - *Even* — same pace throughout.
-  - *Negative split* — starts slower, finishes faster (commonly recommended for most race distances).
-  - *Positive split* — starts faster, eases off later.
+  - *Negative Split* — starts slower, finishes faster (commonly recommended for most race distances).
+  - *Positive Split* — starts faster, eases off later.
   - **Strength** (%) sets how aggressive the ramp is, from the first split to the last.
-- **Elevation adjustment** — enter total elevation gain (m) over the route and the calculator adds a flat pace penalty (~3.5 sec/km per 10 m of gain), spread across the race.
+- **Elevation Adjustment** — enter total elevation gain (m) over the route and the calculator adds a flat pace penalty (~3.5 sec/km per 10 m of gain), spread across the race.
 
 All splits are rescaled at the end so the cumulative time lands exactly on your target finish time — the strategy shapes the *distribution* of pace, not the total.
 
-**Planned vs. Executed** — the split table includes an editable **Actual pace** column. As you run (or afterward, from your watch), type in the pace you actually ran for each split (`mm:ss`, in the same unit — /km or /mi — as the Planned pace column):
+**Planned vs. Executed** — the split table includes an editable **Actual Pace** column. As you run (or afterward, from your watch), type in the pace you actually ran for each split (`mm:ss`, in the same unit — /km or /mi — as the Planned pace column):
 
-- **Actual cumulative** updates live, computed by chaining actual paces together split by split; any split you leave blank is assumed to have been run on-plan, so it doesn't skew later rows.
+- **Actual Cumulative** updates live, computed by chaining actual paces together split by split; any split you leave blank is assumed to have been run on-plan, so it doesn't skew later rows.
 - **Pace Diff** compares *that split's* actual pace to *that split's* planned pace — faster than planned in mint, slower than planned in red, on-pace in neutral gray. This is per-split, not cumulative, so a fast split shows ahead even if you're still behind overall.
 - A summary line under the table separately reports your overall cumulative status — how far ahead/behind schedule you were through the last split you entered a pace for.
 - **Clear Actuals** wipes all entered paces and resets the table to plan-only, without regenerating the planned splits.
+
+A **Total** row at the bottom of the table summarizes the whole race: overall planned average pace and goal time, overall actual average pace (distance-weighted across whatever splits you've logged), your projected/actual finish time (using entered paces where given and assuming on-plan for any splits still blank), and the overall diff against your goal time.
 
 The generated table also feeds the **Pace Band** tab (planned columns only — actuals aren't included on the printable band).
 
 ### 3. Race Predictor Tab
 
-Enter one known result (distance + finish time) and get predicted times for 5K, 10K, Half Marathon, and Marathon, using the **Riegel formula**:
+Enter one known result (distance + finish time) and get predicted times for 5K, 10K, Half Marathon, and Marathon, using the **Riegel Formula**:
 
 ```
 T2 = T1 × (D2 / D1)^1.06
@@ -84,7 +86,7 @@ T2 = T1 × (D2 / D1)^1.06
 
 This is a standard, widely-used estimate for translating a result at one distance into an expected result at another, for a similarly-trained effort. It gets less accurate the further apart the distances are (e.g. predicting a marathon from a 5K time) or when there's a large fitness/training gap between the two efforts.
 
-**Heart rate zone mapper** (optional, in the same tab): enter your max HR and an easy-pace reference, and it maps five effort zones — Recovery, Easy/Aerobic, Steady, Threshold, VO2 Max/Hard — to an approximate bpm range and a corresponding pace. This is a rough heuristic based on %HRmax, not a lab-tested lactate-threshold breakdown.
+**Heart Rate Zone Mapper** (optional, in the same tab): enter your max HR and an easy-pace reference, and it maps five effort zones — Recovery, Easy/Aerobic, Steady, Threshold, VO2 Max/Hard — to an approximate bpm range and a corresponding pace. This is a rough heuristic based on %HRmax, not a lab-tested lactate-threshold breakdown.
 
 ### 4. Training Paces (VDOT) Tab
 
@@ -114,7 +116,7 @@ Click **Print / Save as PDF** to print just the band (everything else on the pag
 
 ## Calculation Reference
 
-| Calculation | Formula / Logic |
+| Calculation | Formula / logic |
 |---|---|
 | Pace | `time ÷ distance` |
 | Finish time | `pace × distance` |
@@ -123,8 +125,6 @@ Click **Print / Save as PDF** to print just the band (everything else on the pag
 | km ↔ mi | `1 mi = 1.609344 km` |
 | Race prediction | Riegel: `T2 = T1 × (D2/D1)^1.06` |
 | Elevation penalty | `+3.5 sec/km per 10 m of net gain`, spread across the route |
-| HR zone pace multipliers | Recovery ×1.25, Easy ×1.00, Steady ×0.90, Threshold ×0.82, VO2 Max ×0.74 (relative to entered easy pace) |
-| VO2 from velocity (Daniels & Gilbert) | `VO2 = -4.60 + 0.182258·v + 0.000104·v²` (v in m/min) |
 | HR zone pace multipliers | Recovery ×1.25, Easy ×1.00, Steady ×0.90, Threshold ×0.82, VO2 Max ×0.74 (relative to entered easy pace) |
 | VO2 from velocity (Daniels & Gilbert) | `VO2 = -4.60 + 0.182258·v + 0.000104·v²` (v in m/min) |
 | %VO2max sustainable for duration t (min) | `0.8 + 0.1894393·e^(-0.012778t) + 0.2989558·e^(-0.1932605t)` |
