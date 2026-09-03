@@ -2,8 +2,8 @@
     --track: #122040;
     --track-2: #0c1730;
     --paper: #F4F2EC;
-    --line: rgba(244,242,236,0.14);
-    --line-strong: rgba(244,242,236,0.28);
+    --line: rgba(244, 242, 236, 0.14);
+    --line-strong: rgba(244, 242, 236, 0.28);
     --amber: #FFB020;
     --flag: #E24A3B;
     --mint: #5FC9A8;
@@ -22,7 +22,7 @@ html, body {
 
 body {
     background: var(--track);
-    background-image: radial-gradient(ellipse at top left, rgba(255,255,255,0.05), transparent 55%), repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 96px);
+    background-image: radial-gradient(ellipse at top left, rgba(255, 255, 255, 0.05), transparent 55%), repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 96px);
     color: var(--paper);
     font-family: 'Roboto Mono', monospace;
     min-height: 100vh;
@@ -34,7 +34,7 @@ body {
     margin: 0 auto;
 }
 
-/* Header — lane markers */
+/* Header — Lane Markers */
 header {
     display: flex;
     align-items: flex-end;
@@ -47,16 +47,16 @@ header {
 }
 
 .h-title {
-    font-family: 'Oswald',sans-serif;
+    font-family: 'Oswald', sans-serif;
     font-weight: 700;
-    font-size: clamp(30px,6vw,46px);
+    font-size: clamp(30px, 6vw, 46px);
     letter-spacing: 0.5px;
     line-height: 0.95;
 }
 
-    .h-title span {
-        color: var(--amber);
-    }
+.h-title span {
+    color: var(--amber);
+}
 
 .h-sub {
     font-size: 12px;
@@ -66,7 +66,7 @@ header {
     text-align: right;
 }
 
-/* Tabs — bib-style toggle */
+/* Tabs — Bib-Style Toggle */
 .tabs {
     display: flex;
     gap: 2px;
@@ -75,7 +75,7 @@ header {
 }
 
 .tab {
-    font-family: 'Oswald',sans-serif;
+    font-family: 'Oswald', sans-serif;
     font-size: 14px;
     font-weight: 600;
     letter-spacing: 0.03em;
@@ -84,27 +84,27 @@ header {
     color: var(--muted);
     border: 1px solid var(--line-strong);
     cursor: pointer;
-    transition: background .15s, color .15s;
+    transition: background 0.15s, color 0.15s;
 }
 
-    .tab:hover {
-        color: var(--paper);
-    }
+.tab:hover {
+    color: var(--paper);
+}
 
-    .tab.active {
-        background: var(--paper);
-        color: var(--ink);
-        border-color: var(--paper);
-    }
+.tab.active {
+    background: var(--paper);
+    color: var(--ink);
+    border-color: var(--paper);
+}
 
 .panel {
     display: none;
 }
 
-    .panel.active {
-        display: block;
-        animation: fade .25s ease;
-    }
+.panel.active {
+    display: block;
+    animation: fade 0.25s ease;
+}
 
 @keyframes fade {
     from {
@@ -122,11 +122,11 @@ header {
     border: 1px solid var(--line-strong);
     padding: 20px;
     margin-bottom: 16px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.03), transparent);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent);
 }
 
 .card-title {
-    font-family: 'Oswald',sans-serif;
+    font-family: 'Oswald', sans-serif;
     font-weight: 600;
     font-size: 13px;
     letter-spacing: 0.08em;
@@ -138,13 +138,13 @@ header {
     gap: 8px;
 }
 
-    .card-title::before {
-        content: "";
-        width: 16px;
-        height: 2px;
-        background: var(--amber);
-        display: inline-block;
-    }
+.card-title::before {
+    content: '';
+    width: 16px;
+    height: 2px;
+    background: var(--amber);
+    display: inline-block;
+}
 
 .row {
     display: flex;
@@ -166,50 +166,53 @@ label {
     margin-bottom: 6px;
 }
 
-input[type=text], input[type=number], select {
+input[type=text],
+input[type=number],
+select {
     width: 100%;
     background: var(--track-2);
     border: 1px solid var(--line-strong);
     color: var(--paper);
     padding: 10px 10px;
-    font-family: 'Roboto Mono',monospace;
+    font-family: 'Roboto Mono', monospace;
     font-size: 15px;
 }
 
-    input:focus, select:focus {
-        outline: 2px solid var(--amber);
-        outline-offset: 1px;
-    }
+input:focus,
+select:focus {
+    outline: 2px solid var(--amber);
+    outline-offset: 1px;
+}
 
 .segmented {
     display: flex;
     border: 1px solid var(--line-strong);
 }
 
-    .segmented button {
-        flex: 1;
-        background: transparent;
-        color: var(--muted);
-        border: none;
-        padding: 9px 8px;
-        font-family: 'Roboto Mono',monospace;
-        font-size: 13px;
-        cursor: pointer;
-        border-right: 1px solid var(--line-strong);
-    }
+.segmented button {
+    flex: 1;
+    background: transparent;
+    color: var(--muted);
+    border: none;
+    padding: 9px 8px;
+    font-family: 'Roboto Mono', monospace;
+    font-size: 13px;
+    cursor: pointer;
+    border-right: 1px solid var(--line-strong);
+}
 
-        .segmented button:last-child {
-            border-right: none;
-        }
+.segmented button:last-child {
+    border-right: none;
+}
 
-        .segmented button.active {
-            background: var(--amber);
-            color: var(--ink);
-            font-weight: 600;
-        }
+.segmented button.active {
+    background: var(--amber);
+    color: var(--ink);
+    font-weight: 600;
+}
 
 .btn {
-    font-family: 'Oswald',sans-serif;
+    font-family: 'Oswald', sans-serif;
     font-weight: 600;
     letter-spacing: 0.04em;
     background: var(--amber);
@@ -221,21 +224,21 @@ input[type=text], input[type=number], select {
     text-transform: uppercase;
 }
 
-    .btn:hover {
-        background: #ffc451;
-    }
+.btn:hover {
+    background: #ffc451;
+}
 
-    .btn.secondary {
-        background: transparent;
-        color: var(--paper);
-        border: 1px solid var(--line-strong);
-    }
+.btn.secondary {
+    background: transparent;
+    color: var(--paper);
+    border: 1px solid var(--line-strong);
+}
 
-        .btn.secondary:hover {
-            border-color: var(--paper);
-        }
+.btn.secondary:hover {
+    border-color: var(--paper);
+}
 
-/* Big readout */
+/* Big Readout */
 .readout {
     display: flex;
     gap: 0;
@@ -251,28 +254,28 @@ input[type=text], input[type=number], select {
         border-right: 1px solid var(--line-strong);
     }
 
-        .readout .cell:last-child {
-            border-right: none;
-        }
+    .readout .cell:last-child {
+        border-right: none;
+    }
 
-        .readout .cell .num {
-            font-family: 'Oswald',sans-serif;
-            font-weight: 700;
-            font-size: clamp(24px,4vw,34px);
-            color: var(--paper);
-            line-height: 1;
-        }
+    .readout .cell .num {
+        font-family: 'Oswald', sans-serif;
+        font-weight: 700;
+        font-size: clamp(24px, 4vw, 34px);
+        color: var(--paper);
+        line-height: 1;
+    }
 
-        .readout .cell.hot .num {
-            color: var(--amber);
-        }
+    .readout .cell.hot .num {
+        color: var(--amber);
+    }
 
-        .readout .cell .lbl {
-            font-size: 11px;
-            color: var(--muted);
-            letter-spacing: 0.05em;
-            margin-top: 6px;
-        }
+    .readout .cell .lbl {
+        font-size: 11px;
+        color: var(--muted);
+        letter-spacing: 0.05em;
+        margin-top: 6px;
+    }
 
 table {
     width: 100%;
@@ -283,7 +286,7 @@ table {
 
 th {
     text-align: left;
-    font-family: 'Oswald',sans-serif;
+    font-family: 'Oswald', sans-serif;
     font-size: 11px;
     letter-spacing: 0.06em;
     text-transform: uppercase;
@@ -321,14 +324,14 @@ tfoot tr.total-row td {
     border: 1px solid var(--line-strong);
     color: var(--paper);
     padding: 6px 8px;
-    font-family: 'Roboto Mono',monospace;
+    font-family: 'Roboto Mono', monospace;
     font-size: 13px;
 }
 
-    .actual-input:focus {
-        outline: 2px solid var(--amber);
-        outline-offset: 1px;
-    }
+.actual-input:focus {
+    outline: 2px solid var(--amber);
+    outline-offset: 1px;
+}
 
 .diff-ahead {
     color: var(--mint);
@@ -346,7 +349,7 @@ tfoot tr.total-row td {
 
 .hr-zones {
     display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(150px,1fr));
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 10px;
     margin-top: 6px;
 }
@@ -356,20 +359,20 @@ tfoot tr.total-row td {
     padding: 10px 12px;
 }
 
-    .hr-zone .z-name {
-        font-family: 'Oswald',sans-serif;
-        font-size: 12px;
-        font-weight: 600;
-        letter-spacing: 0.04em;
-    }
+.hr-zone .z-name {
+    font-family: 'Oswald', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
 
-    .hr-zone .z-pace {
-        font-size: 16px;
-        color: var(--amber);
-        margin-top: 4px;
-    }
+.hr-zone .z-pace {
+    font-size: 16px;
+    color: var(--amber);
+    margin-top: 4px;
+}
 
-/* Pace band */
+/* Pace Band */
 .band {
     background: var(--paper);
     color: var(--ink);
@@ -386,22 +389,23 @@ tfoot tr.total-row td {
     margin-bottom: 10px;
 }
 
-    .band-head .bt {
-        font-family: 'Oswald',sans-serif;
-        font-weight: 700;
-        font-size: 22px;
-    }
+.band-head .bt {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+}
 
-    .band-head .bs {
-        font-size: 12px;
-        color: #555;
-    }
+.band-head .bs {
+    font-size: 12px;
+    color: #555;
+}
 
 .band table {
     font-size: 12px;
 }
 
-.band th, .band td {
+.band th,
+.band td {
     border-color: #ccc;
     color: var(--ink);
 }
@@ -423,7 +427,8 @@ footer {
         visibility: hidden;
     }
 
-    #printBand, #printBand * {
+    #printBand,
+    #printBand * {
         visibility: visible;
     }
 

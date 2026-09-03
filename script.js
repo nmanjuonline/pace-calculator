@@ -1,60 +1,65 @@
-$(function(){
+$(function() {
 
   /* ---------- helpers ---------- */
   const KM_PER_MI = 1.609344;
 
-  function toSeconds(hms){
+  function toSeconds(hms) {
     // accepts hh:mm:ss or mm:ss
-    if(!hms) return null;
-    const parts = hms.trim().split(':').map(p=>parseFloat(p));
-    if(parts.some(isNaN)) return null;
-    if(parts.length === 3) return parts[0]*3600 + parts[1]*60 + parts[2];
-    if(parts.length === 2) return parts[0]*60 + parts[1];
-    if(parts.length === 1) return parts[0];
+    if (!hms) return null;
+    const parts = hms.trim().split(':').map(p => parseFloat(p));
+    if (parts.some(isNaN)) return null;
+    if (parts.length === 3) return parts[0] * 3600 + parts[1] * 60 + parts[2];
+    if (parts.length === 2) return parts[0] * 60 + parts[1];
+    if (parts.length === 1) return parts[0];
     return null;
   }
-  function fmtHMS(totalSec){
-    if(totalSec == null || isNaN(totalSec) || totalSec < 0) return '—';
+
+  function fmtHMS(totalSec) {
+    if (totalSec == null || isNaN(totalSec) || totalSec < 0) return '—';
     totalSec = Math.round(totalSec);
-    const h = Math.floor(totalSec/3600);
-    const m = Math.floor((totalSec%3600)/60);
-    const s = totalSec%60;
-    if(h>0) return `${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-    return `${m}:${String(s).padStart(2,'0')}`;
-  }
-  function fmtPace(secPerUnit){
-    if(secPerUnit == null || isNaN(secPerUnit) || secPerUnit < 0) return '—';
-    const m = Math.floor(secPerUnit/60);
-    const s = Math.round(secPerUnit%60);
-    return `${m}:${String(s).padStart(2,'0')}`;
+    const h = Math.floor(totalSec / 3600);
+    const m = Math.floor((totalSec % 3600) / 60);
+    const s = totalSec % 60;
+    if (h > 0) return `${h}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    return `${m}:${String(s).padStart(2, '0')}`;
   }
 
-  /* ---------- segmented control wiring ---------- */
-  $('.segmented').on('click','button',function(){
+  function fmtPace(secPerUnit) {
+    if (secPerUnit == null || isNaN(secPerUnit) || secPerUnit < 0) return '—';
+    const m = Math.floor(secPerUnit / 60);
+    const s = Math.round(secPerUnit % 60);
+    return `${m}:${String(s).padStart(2, '0')}`;
+  }
+
+  /* ---------- Segmented Control Wiring ---------- */
+  $('.segmented').on('click', 'button', function() {
     $(this).addClass('active').siblings().removeClass('active');
   });
 
-  $('.tab').on('click',function(){
+  $('.tab').on('click', function() {
     const panel = $(this).data('panel');
-    $('.tab').removeClass('active'); $(this).addClass('active');
+    $('.tab').removeClass('active');
+    $(this).addClass('active');
     $('.panel').removeClass('active');
-    $('#panel-'+panel).addClass('active');
+    $('#panel-' + panel).addClass('active');
   });
 
-  function wireDistPreset(presetSel, customSel){
-    $(presetSel).on('change',function(){
+  function wireDistPreset(presetSel, customSel) {
+    $(presetSel).on('change', function() {
       const isCustom = $(this).val() === 'custom';
       $(customSel).prop('disabled', !isCustom);
-      if(isCustom) $(customSel).focus();
+      if (isCustom) $(customSel).focus();
     });
   }
-  wireDistPreset('#distPreset','#distCustom');
-  wireDistPreset('#sDistPreset','#sDistCustom');
-  wireDistPreset('#pDistPreset','#pDistCustom');
 
-  function getDistKm(presetSel, customSel){
+  wireDistPreset('#distPreset', '#distCustom');
+  wireDistPreset('#sDistPreset', '#sDistCustom');
+  wireDistPreset('#pDistPreset', '#pDistCustom');
+  wireDistPreset('#vDistPreset', '#vDistCustom');
+
+  function getDistKm(presetSel, customSel) {
     const v = $(presetSel).val();
-    if(v === 'custom'){
+    if (v === 'custom') {
       const c = parseFloat($(customSel).val());
       return isNaN(c) ? null : c;
     }
@@ -62,30 +67,30 @@ $(function(){
   }
 
   /* ===================== CALCULATOR ===================== */
-  $('#calcBtn').on('click', function(){
+  $('#calcBtn').on('click', function() {
     const solveFor = $('#solveFor button.active').data('v');
     const distUnit = $('#distUnit button.active').data('v');
     const paceUnit = $('#paceUnit button.active').data('v');
 
-    let distKm = getDistKm('#distPreset','#distCustom');
-    if(distUnit === 'mi' && distKm != null) distKm = distKm * KM_PER_MI;
+    let distKm = getDistKm('#distPreset', '#distCustom');
+    if (distUnit === 'mi' && distKm != null) distKm = distKm * KM_PER_MI;
 
     const timeSec = toSeconds($('#timeInput').val());
     let paceSecPerUnit = toSeconds($('#paceInput').val());
     // normalize pace to sec/km internally
     let paceSecPerKm = paceSecPerUnit;
-    if(paceSecPerUnit != null && paceUnit === 'mi') paceSecPerKm = paceSecPerUnit / KM_PER_MI;
+    if (paceSecPerUnit != null && paceUnit === 'mi') paceSecPerKm = paceSecPerUnit / KM_PER_MI;
 
     let resultDistKm = distKm, resultTimeSec = timeSec, resultPaceSecPerKm = paceSecPerKm;
 
-    if(solveFor === 'pace'){
-      if(distKm == null || timeSec == null){ alert('Enter distance and finish time.'); return; }
+    if (solveFor === 'pace') {
+      if (distKm == null || timeSec == null) { alert('Enter distance and finish time.'); return; }
       resultPaceSecPerKm = timeSec / distKm;
-    } else if(solveFor === 'time'){
-      if(distKm == null || paceSecPerKm == null){ alert('Enter distance and pace.'); return; }
+    } else if (solveFor === 'time') {
+      if (distKm == null || paceSecPerKm == null) { alert('Enter distance and pace.'); return; }
       resultTimeSec = paceSecPerKm * distKm;
-    } else if(solveFor === 'distance'){
-      if(timeSec == null || paceSecPerKm == null){ alert('Enter finish time and pace.'); return; }
+    } else if (solveFor === 'distance') {
+      if (timeSec == null || paceSecPerKm == null) { alert('Enter finish time and pace.'); return; }
       resultDistKm = timeSec / paceSecPerKm;
     }
 
@@ -93,9 +98,9 @@ $(function(){
       ? fmtPace(resultPaceSecPerKm * KM_PER_MI) + ' /mi'
       : fmtPace(resultPaceSecPerKm) + ' /km';
     const distDisplay = distUnit === 'mi'
-      ? (resultDistKm/KM_PER_MI).toFixed(2) + ' mi'
+      ? (resultDistKm / KM_PER_MI).toFixed(2) + ' mi'
       : resultDistKm.toFixed(2) + ' km';
-    const speedKmh = resultPaceSecPerKm ? (3600/resultPaceSecPerKm) : null;
+    const speedKmh = resultPaceSecPerKm ? (3600 / resultPaceSecPerKm) : null;
     const speedMph = speedKmh ? speedKmh / KM_PER_MI : null;
 
     const cells = $('#calcResult .cell');
@@ -112,23 +117,23 @@ $(function(){
   // per-split pace diff (vs planned pace for that split), running actual cumulative
   // time, and cumulative diff vs the planned schedule. Splits left blank are assumed
   // run on-plan so they don't skew later cumulative rows.
-  function computeActuals(){
-    if(!lastSplits) return null;
+  function computeActuals() {
+    if (!lastSplits) return null;
     const distLabel = lastSplits.distLabel;
     let cumulative = 0;
     let lastFilledIdx = -1;
     let anyEntered = false;
 
-    const rows = lastSplits.rows.map((row, idx)=>{
+    const rows = lastSplits.rows.map((row, idx) => {
       const $input = $(`.actual-input[data-idx="${idx}"]`);
       const val = $input.length ? $input.val().trim() : '';
       const plannedPaceDisplaySec = distLabel === 'mi' ? row.plannedPaceSecPerKm * KM_PER_MI : row.plannedPaceSecPerKm;
 
       let entered = false, actualPaceDisplaySec = null, paceSecPerKmInternal = row.plannedPaceSecPerKm;
 
-      if(val !== ''){
+      if (val !== '') {
         const enteredSec = toSeconds(val);
-        if(enteredSec != null){
+        if (enteredSec != null) {
           entered = true;
           actualPaceDisplaySec = enteredSec;
           paceSecPerKmInternal = distLabel === 'mi' ? enteredSec / KM_PER_MI : enteredSec;
@@ -154,10 +159,10 @@ $(function(){
     return { distLabel, rows, lastFilledIdx, anyEntered, finalCumulativeSec: cumulative };
   }
 
-  $('#genSplits').on('click', function(){
-    let distKm = getDistKm('#sDistPreset','#sDistCustom');
+  $('#sSplitsBtn').on('click', function() {
+    let distKm = getDistKm('#sDistPreset', '#sDistCustom');
     const timeSec = toSeconds($('#sTime').val());
-    if(distKm == null || timeSec == null){ alert('Enter distance and target finish time.'); return; }
+    if (distKm == null || timeSec == null) { alert('Enter distance and target finish time.'); return; }
 
     const intervalVal = $('#sInterval').val();
     let stepKm;
