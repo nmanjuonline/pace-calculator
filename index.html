@@ -1,330 +1,402 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Pace Calculator</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <title>Pace Calculator</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-<div class="wrap">
+    <div class="wrap">
 
-  <header>
-    <div class="h-title">PACE<span>/</span>CALC</div>
-    <div class="h-sub">PACE · TIME · DISTANCE — SPLITS, PREDICTIONS &amp; PRINTABLE BANDS</div>
-  </header>
+        <header>
+            <div class="h-title">
+                PACE
+                <span>/</span>CALC
+            </div>
+            <div class="h-sub">PACE · TIME · DISTANCE — SPLITS, PREDICTIONS &amp; PRINTABLE BANDS</div>
+        </header>
 
-  <div class="tabs">
-    <button class="tab active" data-panel="calc">Calculator</button>
-    <button class="tab" data-panel="splits">Splits &amp; Strategy</button>
-    <button class="tab" data-panel="predict">Race Predictor</button>
-    <button class="tab" data-panel="vdot">Training Paces</button>
-    <button class="tab" data-panel="band">Pace Band</button>
-  </div>
+        <div class="tabs">
+            <button class="tab active" data-panel="calc">Calculator</button>
+            <button class="tab" data-panel="splits">Splits &amp; Strategy</button>
+            <button class="tab" data-panel="predict">Race Predictor</button>
+            <button class="tab" data-panel="vdot">Training Paces</button>
+            <button class="tab" data-panel="band">Pace Band</button>
+        </div>
 
-  <!-- ===================== CALCULATOR ===================== -->
-  <div class="panel active" id="panel-calc">
-    <div class="card">
-      <div class="card-title">Solve For</div>
-      <div class="segmented" id="solveFor">
-        <button data-v="pace" class="active">Pace</button>
-        <button data-v="time">Finish Time</button>
-        <button data-v="distance">Distance</button>
-      </div>
+        <!-- ===================== CALCULATOR ===================== -->
+        <div class="panel active" id="panel-calc">
+            <div class="card">
+                <div class="card-title">Solve For</div>
+                <div class="segmented" id="solveFor">
+                    <button data-v="pace" class="active">Pace</button>
+                    <button data-v="time">Finish Time</button>
+                    <button data-v="distance">Distance</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Inputs</div>
+                <div class="row">
+                    <div class="field">
+                        <label>Distance</label>
+                        <select id="distPreset">
+                            <option value="5">5K</option>
+                            <option value="10">10K</option>
+                            <option value="21.0975">Half Marathon</option>
+                            <option value="42.195">Marathon</option>
+                            <option value="custom">Custom</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Custom distance</label>
+                        <input type="number" id="distCustom" step="0.01" placeholder="e.g. 15" disabled>
+                    </div>
+                    <div class="field">
+                        <label>Distance unit</label>
+                        <div class="segmented" id="distUnit">
+                            <button data-v="km" class="active">km</button>
+                            <button data-v="mi">mi</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="field">
+                        <label>Finish time (hh:mm:ss)</label>
+                        <input type="text" id="timeInput" placeholder="00:25:00">
+                    </div>
+                    <div class="field">
+                        <label>Pace (mm:ss)</label>
+                        <input type="text" id="paceInput" placeholder="05:00">
+                    </div>
+                    <div class="field">
+                        <label>Pace unit</label>
+                        <div class="segmented" id="paceUnit">
+                            <button data-v="km" class="active">/km</button>
+                            <button data-v="mi">/mi</button>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn" id="calcBtn">Calculate</button>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Result</div>
+                <div class="readout" id="calcResult">
+                    <div class="cell hot">
+                        <div class="num">—</div>
+                        <div class="lbl">Pace</div>
+                    </div>
+                    <div class="cell">
+                        <div class="num">—</div>
+                        <div class="lbl">Finish time</div>
+                    </div>
+                    <div class="cell">
+                        <div class="num">—</div>
+                        <div class="lbl">Distance</div>
+                    </div>
+                    <div class="cell">
+                        <div class="num">—</div>
+                        <div class="lbl">Speed (km/h · mph)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================== SPLITS & STRATEGY ===================== -->
+        <div class="panel" id="panel-splits">
+            <div class="card">
+                <div class="card-title">Race Setup</div>
+                <div class="row">
+                    <div class="field">
+                        <label>Distance</label>
+                        <select id="sDistPreset">
+                            <option value="5">5K</option>
+                            <option value="10" selected>10K</option>
+                            <option value="21.0975">Half Marathon</option>
+                            <option value="42.195">Marathon</option>
+                            <option value="custom">Custom</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Custom distance (km)</label>
+                        <input type="number" id="sDistCustom" step="0.01" disabled>
+                    </div>
+                    <div class="field">
+                        <label>Target finish time (hh:mm:ss)</label>
+                        <input type="text" id="sTime" placeholder="00:50:00">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="field">
+                        <label>Split interval</label>
+                        <select id="sInterval">
+                            <option value="1">Every 1 km</option>
+                            <option value="5">Every 5 km</option>
+                            <option value="1mi">Every 1 mile</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Strategy</label>
+                        <select id="sStrategy">
+                            <option value="even">Even splits</option>
+                            <option value="negative">Negative split (start slow, finish fast)</option>
+                            <option value="positive">Positive split (start fast, ease off)</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Strategy strength (± % pace shift, end to end)</label>
+                        <input type="number" id="sStrength" value="6" min="0" max="30">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="field">
+                        <label>Elevation gain over the route (m, optional)</label>
+                        <input type="number" id="sElevGain" value="0" min="0">
+                    </div>
+                    <div class="field">
+                        <label>Elevation adjustment</label>
+                        <div class="note" style="margin-top:8px;">Adds roughly 3–4 sec/km per 10m of net gain, distributed across climbing splits.</div>
+                    </div>
+                </div>
+                <button class="btn" id="genSplits">Generate Splits</button>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Split Table</div>
+                <table id="splitsTable">
+                    <thead>
+                        <tr>
+                            <th>Marker</th>
+                            <th>Planned pace</th>
+                            <th>Planned cumulative</th>
+                            <th>Actual pace</th>
+                            <th>Actual cumulative</th>
+                            <th>Pace Diff</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="6" style="color:var(--muted)">Generate splits to see the table.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row" style="margin-top:12px;">
+                    <button class="btn secondary" id="clearActuals">Clear Actuals</button>
+                </div>
+                <div class="note" id="splitsSummary">Cumulative times are what you'd want on your watch at each marker to stay on plan. Log your actual watch time at each marker as you run (or after) to see how you tracked against the plan.</div>
+            </div>
+        </div>
+
+        <!-- ===================== RACE PREDICTOR ===================== -->
+        <div class="panel" id="panel-predict">
+            <div class="card">
+                <div class="card-title">Known Result</div>
+                <div class="row">
+                    <div class="field">
+                        <label>Distance</label>
+                        <select id="pDistPreset">
+                            <option value="5">5K</option>
+                            <option value="10">10K</option>
+                            <option value="21.0975">Half Marathon</option>
+                            <option value="42.195">Marathon</option>
+                            <option value="custom">Custom</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Custom distance (km)</label>
+                        <input type="number" id="pDistCustom" step="0.01" disabled>
+                    </div>
+                    <div class="field">
+                        <label>Finish time (hh:mm:ss)</label>
+                        <input type="text" id="pTime" placeholder="00:25:00">
+                    </div>
+                </div>
+                <button class="btn" id="predictBtn">Predict Other Distances</button>
+                <div class="note">Uses the Riegel formula (T2 = T1 × (D2/D1)^1.06) — a solid estimate for similarly-trained efforts, less accurate across very different distances or with big fitness gaps.</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Predicted Times</div>
+                <table id="predictTable">
+                    <thead>
+                        <tr>
+                            <th>Distance</th>
+                            <th>Predicted time</th>
+                            <th>Predicted pace</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="3" style="color:var(--muted)">Enter a result above and predict.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Heart Rate Effort Zones (optional)</div>
+                <div class="row">
+                    <div class="field">
+                        <label>Max heart rate (bpm)</label>
+                        <input type="number" id="pMaxHR" placeholder="e.g. 190">
+                    </div>
+                    <div class="field">
+                        <label>Easy-pace reference (mm:ss /km)</label>
+                        <input type="text" id="pEasyPace" placeholder="e.g. 06:30">
+                    </div>
+                    <button class="btn secondary" id="genZones" style="align-self:flex-end;height:44px;">Map Zones to Pace</button>
+                </div>
+                <div class="hr-zones" id="hrZones"></div>
+                <div class="note">Rough mapping only — zones scale pace loosely against %HRmax, not a lab-tested threshold.</div>
+            </div>
+        </div>
+
+        <!-- ===================== TRAINING PACES (VDOT) ===================== -->
+        <div class="panel" id="panel-vdot">
+            <div class="card">
+                <div class="card-title">Recent Race Performance</div>
+                <div class="row">
+                    <div class="field">
+                        <label>Distance</label>
+                        <select id="vDistPreset">
+                            <option value="5">5K</option>
+                            <option value="10">10K</option>
+                            <option value="21.0975">Half Marathon</option>
+                            <option value="42.195">Marathon</option>
+                            <option value="custom">Custom</option>
+                        </select>
+                    </div>
+                    <div class="field">
+                        <label>Custom distance (km)</label>
+                        <input type="number" id="vDistCustom" step="0.01" disabled>
+                    </div>
+                    <div class="field">
+                        <label>Finish time (hh:mm:ss)</label>
+                        <input type="text" id="vTime" placeholder="00:50:00">
+                    </div>
+                </div>
+                <button class="btn" id="vdotBtn">Calculate VDOT &amp; Training Paces</button>
+                <div class="note">Based on Jack Daniels' VDOT running formula — estimates your current aerobic fitness from a recent race result, then derives training paces for each workout type. Treat these as a solid starting point, not a lab-tested prescription.</div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">VDOT</div>
+                <div class="readout" id="vdotResult">
+                    <div class="cell hot">
+                        <div class="num">—</div>
+                        <div class="lbl">VDOT score</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Training Paces</div>
+                <table id="vdotPaceTable">
+                    <thead>
+                        <tr>
+                            <th>Zone</th>
+                            <th>Purpose</th>
+                            <th>Pace /km</th>
+                            <th>Pace /mi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="4" style="color:var(--muted)">Enter a race result above and calculate.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="note">
+                    <strong>Easy (E)</strong> — recovery runs, aerobic base, long runs. Conversational effort.
+                    <br>
+                    <strong>Marathon (M)</strong> — goal marathon race pace; sustainable for ~2–3 hours.
+                    <br>
+                    <strong>Threshold (T)</strong> — "comfortably hard" tempo runs or cruise intervals; improves lactate clearance.
+                    <br>
+                    <strong>Interval (I)</strong> — hard effort in the 3–5 min-per-rep range; builds aerobic power (VO2max).
+                    <br>
+                    <strong>Repetition (R)</strong> — short, fast reps (≤2 min) with full recovery; builds speed and running economy.
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Equivalent Race Times</div>
+                <table id="vdotEquivTable">
+                    <thead>
+                        <tr>
+                            <th>Distance</th>
+                            <th>Equivalent time</th>
+                            <th>Equivalent pace</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="3" style="color:var(--muted)">Calculate VDOT above to see equivalent performances.</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="note">These are the times your current VDOT predicts at each distance — a different (and generally more physiologically grounded) model than the Riegel estimate in the Race Predictor tab. Expect the two to diverge slightly, especially at the marathon.</div>
+            </div>
+        </div>
+
+        <!-- ===================== PACE BAND ===================== -->
+        <div class="panel" id="panel-band">
+            <div class="card">
+                <div class="card-title">Band Details</div>
+                <div class="row">
+                    <div class="field">
+                        <label>Race name</label>
+                        <input type="text" id="bRaceName" placeholder="Majja Run 10K">
+                    </div>
+                    <div class="field">
+                        <label>Runner / bib label</label>
+                        <input type="text" id="bRunner" placeholder="Bib #">
+                    </div>
+                </div>
+                <div class="note">Uses the splits generated in the "Splits &amp; Strategy" tab. Generate splits first, then build the band.</div>
+                <button class="btn" id="buildBand">Build Pace Band</button>
+                <button class="btn secondary" id="printBtn">Print / Save as PDF</button>
+            </div>
+
+            <div class="card" id="printBand">
+                <div class="band" id="bandContent">
+                    <div class="band-head">
+                        <div>
+                            <div class="bt" id="bandRaceName">RACE NAME</div>
+                            <div class="bs" id="bandRunner">Runner</div>
+                        </div>
+                        <div class="bs" id="bandSummary">— · —</div>
+                    </div>
+                    <table id="bandTable">
+                        <thead>
+                            <tr>
+                                <th>Marker</th>
+                                <th>Split pace</th>
+                                <th>Cumulative</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="3" style="color:#777">No splits yet.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            PACE / CALC — BUILD YOUR OWN RACE PLAN
+            <br>Built by Manju Narasimha
+        </footer>
     </div>
 
-    <div class="card">
-      <div class="card-title">Inputs</div>
-      <div class="row">
-        <div class="field">
-          <label>Distance</label>
-          <select id="distPreset">
-            <option value="5">5K</option>
-            <option value="10">10K</option>
-            <option value="21.0975">Half Marathon</option>
-            <option value="42.195">Marathon</option>
-            <option value="custom">Custom</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Custom distance</label>
-          <input type="number" id="distCustom" step="0.01" placeholder="e.g. 15" disabled>
-        </div>
-        <div class="field">
-          <label>Distance unit</label>
-          <div class="segmented" id="distUnit">
-            <button data-v="km" class="active">km</button>
-            <button data-v="mi">mi</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="field">
-          <label>Finish time (hh:mm:ss)</label>
-          <input type="text" id="timeInput" placeholder="00:25:00">
-        </div>
-        <div class="field">
-          <label>Pace (mm:ss)</label>
-          <input type="text" id="paceInput" placeholder="05:00">
-        </div>
-        <div class="field">
-          <label>Pace unit</label>
-          <div class="segmented" id="paceUnit">
-            <button data-v="km" class="active">/km</button>
-            <button data-v="mi">/mi</button>
-          </div>
-        </div>
-      </div>
-      <button class="btn" id="calcBtn">Calculate</button>
-    </div>
-
-    <div class="card">
-      <div class="card-title">Result</div>
-      <div class="readout" id="calcResult">
-        <div class="cell hot"><div class="num">—</div><div class="lbl">Pace</div></div>
-        <div class="cell"><div class="num">—</div><div class="lbl">Finish time</div></div>
-        <div class="cell"><div class="num">—</div><div class="lbl">Distance</div></div>
-        <div class="cell"><div class="num">—</div><div class="lbl">Speed (km/h · mph)</div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===================== SPLITS & STRATEGY ===================== -->
-  <div class="panel" id="panel-splits">
-    <div class="card">
-      <div class="card-title">Race Setup</div>
-      <div class="row">
-        <div class="field">
-          <label>Distance</label>
-          <select id="sDistPreset">
-            <option value="5">5K</option>
-            <option value="10" selected>10K</option>
-            <option value="21.0975">Half Marathon</option>
-            <option value="42.195">Marathon</option>
-            <option value="custom">Custom</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Custom distance (km)</label>
-          <input type="number" id="sDistCustom" step="0.01" disabled>
-        </div>
-        <div class="field">
-          <label>Target finish time (hh:mm:ss)</label>
-          <input type="text" id="sTime" placeholder="00:50:00">
-        </div>
-      </div>
-      <div class="row">
-        <div class="field">
-          <label>Split interval</label>
-          <select id="sInterval">
-            <option value="1">Every 1 km</option>
-            <option value="5">Every 5 km</option>
-            <option value="1mi">Every 1 mile</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Strategy</label>
-          <select id="sStrategy">
-            <option value="even">Even splits</option>
-            <option value="negative">Negative split (start slow, finish fast)</option>
-            <option value="positive">Positive split (start fast, ease off)</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Strategy strength (± % pace shift, end to end)</label>
-          <input type="number" id="sStrength" value="6" min="0" max="30">
-        </div>
-      </div>
-      <div class="row">
-        <div class="field">
-          <label>Elevation gain over the route (m, optional)</label>
-          <input type="number" id="sElevGain" value="0" min="0">
-        </div>
-        <div class="field">
-          <label>Elevation adjustment</label>
-          <div class="note" style="margin-top:8px;">Adds roughly 3–4 sec/km per 10m of net gain, distributed across climbing splits.</div>
-        </div>
-      </div>
-      <button class="btn" id="genSplits">Generate Splits</button>
-    </div>
-
-    <div class="card">
-      <div class="card-title">Split Table</div>
-      <table id="splitsTable">
-        <thead><tr><th>Marker</th><th>Planned pace</th><th>Planned cumulative</th><th>Actual pace</th><th>Actual cumulative</th><th>Pace Diff</th></tr></thead>
-        <tbody><tr><td colspan="6" style="color:var(--muted)">Generate splits to see the table.</td></tr></tbody>
-      </table>
-      <div class="row" style="margin-top:12px;">
-        <button class="btn secondary" id="clearActuals">Clear Actuals</button>
-      </div>
-      <div class="note" id="splitsSummary">Cumulative times are what you'd want on your watch at each marker to stay on plan. Log your actual watch time at each marker as you run (or after) to see how you tracked against the plan.</div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">Pace Chart — Planned vs Actual</div>
-      <canvas id="paceChart" height="220"></canvas>
-      <div class="note">Amber is your planned pace per split; mint is what you actually ran (gaps mean no pace was logged for that split).</div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">Ahead / Behind Plan</div>
-      <canvas id="diffChart" height="180"></canvas>
-      <div class="note">Bars above zero mean you were behind schedule at that marker; below zero means ahead. Gray bars mean no actual pace was logged up to that point.</div>
-    </div>
-  </div>
-
-  <!-- ===================== RACE PREDICTOR ===================== -->
-  <div class="panel" id="panel-predict">
-    <div class="card">
-      <div class="card-title">Known Result</div>
-      <div class="row">
-        <div class="field">
-          <label>Distance</label>
-          <select id="pDistPreset">
-            <option value="5">5K</option>
-            <option value="10">10K</option>
-            <option value="21.0975">Half Marathon</option>
-            <option value="42.195">Marathon</option>
-            <option value="custom">Custom</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Custom distance (km)</label>
-          <input type="number" id="pDistCustom" step="0.01" disabled>
-        </div>
-        <div class="field">
-          <label>Finish time (hh:mm:ss)</label>
-          <input type="text" id="pTime" placeholder="00:25:00">
-        </div>
-      </div>
-      <button class="btn" id="predictBtn">Predict Other Distances</button>
-      <div class="note">Uses the Riegel formula (T2 = T1 × (D2/D1)^1.06) — a solid estimate for similarly-trained efforts, less accurate across very different distances or with big fitness gaps.</div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">Predicted Times</div>
-      <table id="predictTable">
-        <thead><tr><th>Distance</th><th>Predicted time</th><th>Predicted pace</th></tr></thead>
-        <tbody><tr><td colspan="3" style="color:var(--muted)">Enter a result above and predict.</td></tr></tbody>
-      </table>
-    </div>
-
-    <div class="card">
-      <div class="card-title">Heart Rate Effort Zones (optional)</div>
-      <div class="row">
-        <div class="field">
-          <label>Max heart rate (bpm)</label>
-          <input type="number" id="pMaxHR" placeholder="e.g. 190">
-        </div>
-        <div class="field">
-          <label>Easy-pace reference (mm:ss /km)</label>
-          <input type="text" id="pEasyPace" placeholder="e.g. 06:30">
-        </div>
-        <button class="btn secondary" id="genZones" style="align-self:flex-end;height:44px;">Map Zones to Pace</button>
-      </div>
-      <div class="hr-zones" id="hrZones"></div>
-      <div class="note">Rough mapping only — zones scale pace loosely against %HRmax, not a lab-tested threshold.</div>
-    </div>
-  </div>
-
-  <!-- ===================== TRAINING PACES (VDOT) ===================== -->
-  <div class="panel" id="panel-vdot">
-    <div class="card">
-      <div class="card-title">Recent Race Performance</div>
-      <div class="row">
-        <div class="field">
-          <label>Distance</label>
-          <select id="vDistPreset">
-            <option value="5">5K</option>
-            <option value="10">10K</option>
-            <option value="21.0975">Half Marathon</option>
-            <option value="42.195">Marathon</option>
-            <option value="custom">Custom</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Custom distance (km)</label>
-          <input type="number" id="vDistCustom" step="0.01" disabled>
-        </div>
-        <div class="field">
-          <label>Finish time (hh:mm:ss)</label>
-          <input type="text" id="vTime" placeholder="00:50:00">
-        </div>
-      </div>
-      <button class="btn" id="vdotBtn">Calculate VDOT &amp; Training Paces</button>
-      <div class="note">Based on Jack Daniels' VDOT running formula — estimates your current aerobic fitness from a recent race result, then derives training paces for each workout type. Treat these as a solid starting point, not a lab-tested prescription.</div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">VDOT</div>
-      <div class="readout" id="vdotResult">
-        <div class="cell hot"><div class="num">—</div><div class="lbl">VDOT score</div></div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">Training Paces</div>
-      <table id="vdotPaceTable">
-        <thead><tr><th>Zone</th><th>Purpose</th><th>Pace /km</th><th>Pace /mi</th></tr></thead>
-        <tbody><tr><td colspan="4" style="color:var(--muted)">Enter a race result above and calculate.</td></tr></tbody>
-      </table>
-      <div class="note">
-        <strong>Easy (E)</strong> — recovery runs, aerobic base, long runs. Conversational effort.<br>
-        <strong>Marathon (M)</strong> — goal marathon race pace; sustainable for ~2–3 hours.<br>
-        <strong>Threshold (T)</strong> — "comfortably hard" tempo runs or cruise intervals; improves lactate clearance.<br>
-        <strong>Interval (I)</strong> — hard effort in the 3–5 min-per-rep range; builds aerobic power (VO2max).<br>
-        <strong>Repetition (R)</strong> — short, fast reps (≤2 min) with full recovery; builds speed and running economy.
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">Equivalent Race Times</div>
-      <table id="vdotEquivTable">
-        <thead><tr><th>Distance</th><th>Equivalent time</th><th>Equivalent pace</th></tr></thead>
-        <tbody><tr><td colspan="3" style="color:var(--muted)">Calculate VDOT above to see equivalent performances.</td></tr></tbody>
-      </table>
-      <div class="note">These are the times your current VDOT predicts at each distance — a different (and generally more physiologically grounded) model than the Riegel estimate in the Race Predictor tab. Expect the two to diverge slightly, especially at the marathon.</div>
-    </div>
-  </div>
-
-  <!-- ===================== PACE BAND ===================== -->
-  <div class="panel" id="panel-band">
-    <div class="card">
-      <div class="card-title">Band Details</div>
-      <div class="row">
-        <div class="field"><label>Race name</label><input type="text" id="bRaceName" placeholder="Majja Run 10K"></div>
-        <div class="field"><label>Runner / bib label</label><input type="text" id="bRunner" placeholder="Bib #"></div>
-      </div>
-      <div class="note">Uses the splits generated in the "Splits &amp; Strategy" tab. Generate splits first, then build the band.</div>
-      <button class="btn" id="buildBand">Build Pace Band</button>
-      <button class="btn secondary" id="printBtn">Print / Save as PDF</button>
-    </div>
-
-    <div class="card" id="printBand">
-      <div class="band" id="bandContent">
-        <div class="band-head">
-          <div>
-            <div class="bt" id="bandRaceName">RACE NAME</div>
-            <div class="bs" id="bandRunner">Runner</div>
-          </div>
-          <div class="bs" id="bandSummary">— · —</div>
-        </div>
-        <table id="bandTable">
-          <thead><tr><th>Marker</th><th>Split pace</th><th>Cumulative</th></tr></thead>
-          <tbody><tr><td colspan="3" style="color:#777">No splits yet.</td></tr></tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-
-  <footer>PACE / CALC — BUILD YOUR OWN RACE PLAN</footer>
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.5.1/chart.umd.min.js"></script>
-<script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>

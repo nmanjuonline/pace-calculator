@@ -1,16 +1,16 @@
-# Pace / Calc
+# Pace Calculator
 
 A single-page, client-side pace calculator for runners and race organizers. Solve pace/time/distance, generate race splits with pacing strategy, predict times across distances, and print a race-day pace band — all with no backend, no build step, and no dependencies beyond jQuery (loaded from CDN).
 
 ---
 
-## File structure
+## File Structure
 
 ```
 .
-├── index.html      # Markup — all four tool panels, no logic or styling inline
-├── styles.css      # All visual styling (theme, layout, tables, print rules)
-├── script.js       # All calculation logic and DOM interactivity (jQuery)
+├── index.html       # Markup — all four tool panels, no logic or styling inline
+├── styles.css       # All visual styling (theme, layout, tables, print rules)
+├── script.js        # All calculation logic and DOM interactivity (jQuery)
 └── README.md        # This file
 ```
 
@@ -23,12 +23,11 @@ Keep all three files in the same folder. `index.html` loads the other two by rel
 <script src="script.js"></script>
 ```
 
-## How to run
+## How to Run
 
-No installation needed. Double-click `index.html` (or open it in any browser) — it works entirely offline except for three CDN calls:
+No installation needed. Double-click `index.html` (or open it in any browser) — it works entirely offline except for two CDN calls:
 
 - **jQuery 3.7.1** from `cdnjs.cloudflare.com`
-- **Chart.js 4.4.4** from `cdnjs.cloudflare.com` (powers the Splits & Strategy charts)
 - **Google Fonts** (Oswald, Roboto Mono) from `fonts.googleapis.com`
 
 If you need it fully offline, download those resources locally and update the `<link>`/`<script>` tags in `index.html` to point at local copies.
@@ -39,7 +38,8 @@ To host it, upload all four files to any static host (GitHub Pages, S3, Netlify,
 
 ## Features
 
-### 1. Calculator tab
+### 1. Calculator Tab
+
 Solves for **pace**, **finish time**, or **distance** — pick which one you want with the "Solve For" toggle, then fill in the other two fields.
 
 | Input | Notes |
@@ -51,7 +51,8 @@ Solves for **pace**, **finish time**, or **distance** — pick which one you wan
 
 The result panel always shows all four derived values together: pace, finish time, distance, and speed (in both km/h and mph), so you can cross-check the numbers regardless of which one you solved for.
 
-### 2. Splits & Strategy tab
+### 2. Splits & Strategy Tab
+
 Generates a full split table for a given distance and target finish time.
 
 - **Split interval** — every 1 km, every 5 km, or every 1 mile.
@@ -64,7 +65,7 @@ Generates a full split table for a given distance and target finish time.
 
 All splits are rescaled at the end so the cumulative time lands exactly on your target finish time — the strategy shapes the *distribution* of pace, not the total.
 
-**Planned vs. executed** — the split table includes an editable **Actual pace** column. As you run (or afterward, from your watch), type in the pace you actually ran for each split (`mm:ss`, in the same unit — /km or /mi — as the Planned pace column):
+**Planned vs. Executed** — the split table includes an editable **Actual pace** column. As you run (or afterward, from your watch), type in the pace you actually ran for each split (`mm:ss`, in the same unit — /km or /mi — as the Planned pace column):
 
 - **Actual cumulative** updates live, computed by chaining actual paces together split by split; any split you leave blank is assumed to have been run on-plan, so it doesn't skew later rows.
 - **Pace Diff** compares *that split's* actual pace to *that split's* planned pace — faster than planned in mint, slower than planned in red, on-pace in neutral gray. This is per-split, not cumulative, so a fast split shows ahead even if you're still behind overall.
@@ -73,13 +74,8 @@ All splits are rescaled at the end so the cumulative time lands exactly on your 
 
 The generated table also feeds the **Pace Band** tab (planned columns only — actuals aren't included on the printable band).
 
-**Charts** — two charts sit below the split table and update live as you generate splits or type in actual paces:
-- **Pace Chart (Planned vs Actual)** — a line chart comparing planned pace (amber) against your logged actual pace (mint) at each marker. Gaps in the actual line mean no pace was entered for that split.
-- **Ahead / Behind Plan** — a bar chart of the cumulative time diff at each marker, in minutes. Bars above zero (red) mean you were behind schedule at that point; below zero (mint) means ahead; gray bars mean no actual data yet.
+### 3. Race Predictor Tab
 
-Charts are rendered with [Chart.js](https://www.chartjs.org/) (loaded from CDN, alongside jQuery).
-
-### 3. Race Predictor tab
 Enter one known result (distance + finish time) and get predicted times for 5K, 10K, Half Marathon, and Marathon, using the **Riegel formula**:
 
 ```
@@ -90,10 +86,11 @@ This is a standard, widely-used estimate for translating a result at one distanc
 
 **Heart rate zone mapper** (optional, in the same tab): enter your max HR and an easy-pace reference, and it maps five effort zones — Recovery, Easy/Aerobic, Steady, Threshold, VO2 Max/Hard — to an approximate bpm range and a corresponding pace. This is a rough heuristic based on %HRmax, not a lab-tested lactate-threshold breakdown.
 
-### 4. Training Paces (VDOT) tab
+### 4. Training Paces (VDOT) Tab
+
 Enter one recent race result (distance + finish time) and it calculates your **VDOT** — a single number representing current running fitness, from Jack Daniels' VDOT running formula — then derives training paces for five workout types:
 
-| Zone | Purpose | Typical %VO2max used |
+| Zone | Purpose | Typical %VO2max Used |
 |---|---|---|
 | Easy (E) | Recovery runs, aerobic base, long runs | 70% |
 | Marathon (M) | Goal marathon race pace | 84% |
@@ -103,7 +100,8 @@ Enter one recent race result (distance + finish time) and it calculates your **V
 
 Each pace is shown per km and per mile. Below that, an **Equivalent Race Times** table shows what your current VDOT predicts at 5K/10K/Half/Marathon — a physiologically-grounded alternative to the Riegel estimate in the Race Predictor tab. The two models use different curves and will diverge slightly, especially at the marathon distance.
 
-### 5. Pace Band tab
+### 5. Pace Band Tab
+
 Takes the splits generated in the **Splits & Strategy** tab and formats them into a compact, printable card:
 
 - Race name and runner/bib label (freeform text fields)
@@ -114,9 +112,9 @@ Click **Print / Save as PDF** to print just the band (everything else on the pag
 
 ---
 
-## Calculation reference
+## Calculation Reference
 
-| Calculation | Formula / logic |
+| Calculation | Formula / Logic |
 |---|---|
 | Pace | `time ÷ distance` |
 | Finish time | `pace × distance` |
@@ -125,6 +123,8 @@ Click **Print / Save as PDF** to print just the band (everything else on the pag
 | km ↔ mi | `1 mi = 1.609344 km` |
 | Race prediction | Riegel: `T2 = T1 × (D2/D1)^1.06` |
 | Elevation penalty | `+3.5 sec/km per 10 m of net gain`, spread across the route |
+| HR zone pace multipliers | Recovery ×1.25, Easy ×1.00, Steady ×0.90, Threshold ×0.82, VO2 Max ×0.74 (relative to entered easy pace) |
+| VO2 from velocity (Daniels & Gilbert) | `VO2 = -4.60 + 0.182258·v + 0.000104·v²` (v in m/min) |
 | HR zone pace multipliers | Recovery ×1.25, Easy ×1.00, Steady ×0.90, Threshold ×0.82, VO2 Max ×0.74 (relative to entered easy pace) |
 | VO2 from velocity (Daniels & Gilbert) | `VO2 = -4.60 + 0.182258·v + 0.000104·v²` (v in m/min) |
 | %VO2max sustainable for duration t (min) | `0.8 + 0.1894393·e^(-0.012778t) + 0.2989558·e^(-0.1932605t)` |
@@ -176,3 +176,9 @@ All theme values (colors, spacing) are defined as CSS custom properties at the t
 - Fully client-side — no data is saved between sessions; refreshing the page clears all inputs.
 - Pace band printing relies on browser print styles (`@media print`); layout may vary slightly between browsers' print preview.
 - Riegel predictions, VDOT, and HR zone mapping are all estimates, not physiological measurements — treat them as planning aids, not guarantees. VDOT in particular assumes the input race result reflects your current fitness (a recent, well-paced, near-maximal effort); an old or poorly-paced race will skew the training paces it derives.
+
+---
+
+## Credits
+
+Built by **Manju Narasimha**.
