@@ -1,4 +1,4 @@
-# Pace Calculator!
+# Pace Calculator
 
 A single-page, client-side pace calculator for runners and race organizers. Solve pace/time/distance, generate race splits with pacing strategy, predict times across distances, and print a race-day pace band — all with no backend, no build step, and no dependencies beyond jQuery (loaded from CDN).
 
