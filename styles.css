@@ -211,6 +211,11 @@ select {
     transition: all 0.2s ease;
 }
 
+select option {
+    background-color: var(--bg-base);
+    color: var(--text-main);
+}
+
 input:focus,
 select:focus {
     outline: none;
