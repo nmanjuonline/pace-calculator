@@ -1,23 +1,23 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
 :root {
-    --bg-base: #0a0c10;
-    --bg-surface: rgba(18, 22, 30, 0.6);
-    --bg-surface-hover: rgba(28, 34, 46, 0.7);
-    --border-subtle: rgba(255, 255, 255, 0.06);
-    --border-strong: rgba(255, 255, 255, 0.12);
+    --bg-base: #121212;
+    --bg-surface: rgba(31, 31, 34, 0.6);
+    --bg-surface-hover: rgba(43, 43, 47, 0.7);
+    --border-subtle: rgba(255, 255, 255, 0.05);
+    --border-strong: rgba(255, 255, 255, 0.1);
     
-    --primary: #00E5FF;
-    --primary-dim: rgba(0, 229, 255, 0.15);
-    --primary-hover: #33EBFF;
+    --primary: #FC4C02;
+    --primary-dim: rgba(252, 76, 2, 0.15);
+    --primary-hover: #E34402;
     
-    --text-main: #F2F5F8;
-    --text-muted: #8B949E;
+    --text-main: #F8FAFC;
+    --text-muted: #94A3B8;
     
     --accent-success: #10B981;
     --accent-error: #EF4444;
     
-    --shadow-glow: 0 0 20px rgba(0, 229, 255, 0.25);
+    --shadow-glow: 0 0 20px rgba(252, 76, 2, 0.25);
 }
 
 * {
@@ -30,10 +30,10 @@ html, body {
 }
 
 body {
-    background: var(--bg-base);
-    background-image: 
-        radial-gradient(circle at 15% 0%, rgba(0, 229, 255, 0.08), transparent 40%),
-        radial-gradient(circle at 85% 100%, rgba(139, 92, 246, 0.08), transparent 40%);
+    background-color: var(--bg-base);
+    background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 24px 24px;
+    background-position: center top;
     color: var(--text-main);
     font-family: 'Inter', sans-serif;
     min-height: 100vh;
@@ -72,7 +72,7 @@ header {
 .h-title span {
     color: var(--primary);
     -webkit-text-fill-color: var(--primary);
-    text-shadow: 0 0 10px rgba(0, 229, 255, 0.4);
+    text-shadow: 0 0 10px rgba(252, 76, 2, 0.4);
 }
 
 .h-sub {
@@ -149,7 +149,7 @@ header {
 
 .tab:hover {
     color: var(--text-main);
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.25);
 }
 
 .tab.active {
@@ -181,14 +181,14 @@ header {
     border-radius: 16px;
     padding: 24px;
     margin-bottom: 24px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 32px rgba(255, 255, 255, 0.03);
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .card:hover {
     border-color: var(--border-strong);
     transform: translateY(-2px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
 }
 
 .card-title {
@@ -269,7 +269,7 @@ input:disabled {
 /* Segmented Control */
 .segmented {
     display: flex;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.25);
     border: 1px solid var(--border-strong);
     border-radius: 8px;
     overflow: hidden;
@@ -310,36 +310,35 @@ input:disabled {
     font-weight: 700;
     letter-spacing: 0.05em;
     background: var(--primary);
-    color: #000;
+    color: #ffffff;
     border: none;
     border-radius: 8px;
     padding: 14px 24px;
     font-size: 15px;
     cursor: pointer;
     text-transform: uppercase;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 14px rgba(0, 229, 255, 0.2);
+    transition: all 0.2s ease;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    margin-top: 20px;
+    margin-right: 12px;
+    margin-bottom: 12px;
 }
 
 .btn:hover {
     background: var(--primary-hover);
-    box-shadow: 0 6px 20px rgba(0, 229, 255, 0.4);
-    transform: translateY(-2px);
+    transform: translateY(-1px);
 }
 
 .btn:active {
-    transform: translateY(1px);
-    box-shadow: 0 2px 8px rgba(0, 229, 255, 0.2);
+    transform: translateY(0);
 }
 
 .btn.secondary {
     background: transparent;
     color: var(--text-main);
-    border: 1px solid var(--border-strong);
-    box-shadow: none;
+    border: 1px solid var(--text-muted);
 }
 
 .btn.secondary:hover {
@@ -381,7 +380,7 @@ input:disabled {
 
 .readout .cell.hot .num {
     color: var(--primary);
-    text-shadow: 0 0 15px rgba(0, 229, 255, 0.4);
+    text-shadow: 0 0 15px rgba(252, 76, 2, 0.2);
 }
 
 .readout .cell .lbl {
@@ -428,7 +427,7 @@ tr:last-child td {
 }
 
 tr:hover td {
-    background: rgba(255, 255, 255, 0.03);
+    background: rgba(255, 255, 255, 0.02);
 }
 
 tr.marker td {
@@ -438,7 +437,7 @@ tr.marker td {
 
 tfoot tr.total-row td {
     border-top: 1px solid var(--border-strong);
-    background: rgba(0, 229, 255, 0.05);
+    background: rgba(252, 76, 2, 0.05);
     font-weight: 600;
 }
 
@@ -448,15 +447,15 @@ tfoot tr.total-row td {
     color: var(--text-muted);
     margin-top: 16px;
     line-height: 1.6;
-    background: rgba(0, 0, 0, 0.25);
+    background: rgba(255, 255, 255, 0.03);
     padding: 14px 18px;
-    border-radius: 8px;
+    border-radius: 0 8px 8px 0;
     border-left: 3px solid var(--primary);
 }
 
 .actual-input {
     width: 100px;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.3);
     border: 1px solid var(--border-strong);
     color: var(--text-main);
     padding: 8px 10px;
@@ -472,7 +471,7 @@ tfoot tr.total-row td {
     box-shadow: 0 0 0 2px var(--primary-dim);
 }
 
-.diff-ahead { color: var(--accent-success); font-weight: 600; text-shadow: 0 0 10px rgba(16, 185, 129, 0.3); }
+.diff-ahead { color: var(--accent-success); font-weight: 600; text-shadow: 0 0 10px rgba(252, 76, 2, 0.3); }
 .diff-behind { color: var(--accent-error); font-weight: 600; text-shadow: 0 0 10px rgba(239, 68, 68, 0.3); }
 .diff-even { color: var(--text-muted); }
 
@@ -515,49 +514,68 @@ tfoot tr.total-row td {
 
 /* Pace Band */
 .band {
-    background: #ffffff;
-    color: #111111;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), transparent);
+    background-color: var(--bg-surface);
+    color: var(--text-main);
     padding: 24px;
     border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    border: 1px dashed var(--primary);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    position: relative;
+    overflow: hidden;
+}
+
+.band::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--primary);
+    box-shadow: 0 0 10px var(--primary);
 }
 
 .band-head {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    border-bottom: 2px solid #222;
-    padding-bottom: 12px;
-    margin-bottom: 12px;
+    border-bottom: 2px dashed var(--border-strong);
+    padding-bottom: 16px;
+    margin-bottom: 16px;
 }
 
 .band-head .bt {
     font-family: 'Outfit', sans-serif;
     font-weight: 800;
-    font-size: 24px;
-    letter-spacing: -0.5px;
+    font-size: 26px;
+    letter-spacing: 0.5px;
+    color: var(--primary);
+    text-shadow: 0 0 10px rgba(252, 76, 2, 0.4);
+    text-transform: uppercase;
 }
 
 .band-head .bs {
     font-family: 'Inter', sans-serif;
     font-size: 13px;
-    color: #666;
+    color: var(--text-muted);
 }
 
 .band table {
-    font-size: 13px;
+    font-size: 14px;
 }
 
 .band th,
 .band td {
-    border-color: #eeeeee;
-    color: #111111;
-    padding: 10px;
+    border-bottom: 1px solid var(--border-subtle);
+    color: var(--text-main);
+    padding: 12px;
 }
 
 .band th {
-    color: #666666;
-    background: #f9f9f9;
+    color: var(--primary);
+    background: rgba(252, 76, 2, 0.05);
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.08em;
 }
 
 footer {
@@ -579,5 +597,34 @@ footer {
         width: 100%;
         margin: 0;
         box-shadow: none;
+    }
+    .band {
+        background: #ffffff;
+        background-image: none;
+        color: #000000;
+        border: 1px solid #000000;
+        padding: 0;
+        border-radius: 0;
+    }
+    .band::before {
+        display: none;
+    }
+    .band-head {
+        border-bottom: 2px solid #000;
+    }
+    .band-head .bt {
+        color: #000;
+        text-shadow: none;
+    }
+    .band-head .bs {
+        color: #333;
+    }
+    .band th, .band td {
+        border-bottom: 1px solid #ccc;
+        color: #000;
+    }
+    .band th {
+        background: #f0f0f0;
+        color: #000;
     }
 }
