@@ -159,7 +159,7 @@ $(function() {
     return { distLabel, rows, lastFilledIdx, anyEntered, finalCumulativeSec: cumulative };
   }
 
-  $('#sSplitsBtn').on('click', function() {
+  $('#genSplits').on('click', function() {
     let distKm = getDistKm('#sDistPreset', '#sDistCustom');
     const timeSec = toSeconds($('#sTime').val());
     if (distKm == null || timeSec == null) { alert('Enter distance and target finish time.'); return; }
